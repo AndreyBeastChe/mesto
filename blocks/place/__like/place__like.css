@@ -1,0 +1,16 @@
+.place__like {
+width: 22px;
+height: 19px;
+background: #FFFFFF;
+background-image: url(../../../images/like.svg);
+background-repeat: no-repeat;
+background-position: center;
+margin-right: 15px;
+align-self: center;
+border: none;
+}   
+
+.popup__like:hover {
+    opacity: 0.8;
+  }
+  

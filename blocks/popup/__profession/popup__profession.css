@@ -1,0 +1,21 @@
+.popup__profession {
+  width: 358px;
+  border: none;
+  padding-bottom: 13px;
+  border-bottom: 1px solid #000000;
+  color: #000000;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: start;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+@media (max-width: 767px) {
+    .popup__profession {
+      width: 238px; 
+    }
+  }

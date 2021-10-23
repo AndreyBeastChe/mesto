@@ -1,15 +1,15 @@
 .profile {
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: space-between;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
 }
 
 @media (max-width: 767px) {
-    .profile  {
+  .profile {
     flex-direction: column;
     justify-content: center;
     margin-left: auto;
     margin-right: auto;
-    }
   }
+}

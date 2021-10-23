@@ -17,7 +17,7 @@
 }
 
 @media (max-width: 767px) {
-    .popup__name {
-      width: 238px; 
-    }
+  .popup__name {
+    width: 238px;
   }
+}

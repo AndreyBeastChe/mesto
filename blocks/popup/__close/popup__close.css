@@ -1,26 +1,25 @@
 .popup__close {
-    width: 32px;
-    height: 32px;
-    border: none;
-    background: transparent;
-    position: absolute;
-    background-size: cover;
-    background-image: url(../../../images/close-icon.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    top: 0;
-    right: 0;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  position: absolute;
+  background-size: cover;
+  background-image: url(../../../images/close-icon.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  top: 0;
+  right: 0;
 }
 
 @media (max-width: 767px) {
-    .popup__close {
+  .popup__close {
     width: 20px;
     height: 20px;
     right: 35px;
-    }
   }
+}
 
-  .popup__close:hover {
-    opacity: 0.8;
-  }
-  
+.popup__close:hover {
+  opacity: 0.8;
+}

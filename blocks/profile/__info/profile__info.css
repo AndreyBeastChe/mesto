@@ -14,8 +14,8 @@
   .profile__info {
     margin-bottom: 0;
     margin-top: 0;
-    grid-gap: 14px 10px;
-    margin-left: auto;
+    grid-gap: 7px 10px;
+    margin-left: calc((100% - 182px) / 2);
     text-align: center;
     justify-items: center;
   }

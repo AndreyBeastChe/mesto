@@ -4,8 +4,8 @@ const popupCloseButtonElement = popupElement.querySelector(".popup__close");
 const popupSaveButtonElement = popupElement.querySelector(".popup__save");
 let profileName = document.querySelector(".profile__name");
 let jobName = document.querySelector(".profile__description");
-let nameInput = popupElement.querySelector(".popup__input_name");
-let jobInput = popupElement.querySelector(".popup__input_profession");
+let nameInput = popupElement.querySelector(".popup__input_type_name");
+let jobInput = popupElement.querySelector(".popup__input_type_profession");
 
 const openPopup = function () {
   popupElement.classList.add("popup_opened");

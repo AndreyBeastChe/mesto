@@ -20,8 +20,8 @@ const popupAddCloseButtonElement =
   popupAddElement.querySelector(".popup__close");
 const popupFullscriinCloseButtonElement =
   popupPhotoElement.querySelector(".popup__close");
-let fotoPopup = popupPhotoElement.querySelector(".popup_type_photo-fullscreen");
-let namePopup = popupPhotoElement.querySelector(".popup_type_photo-name");
+let fotoPopup = popupPhotoElement.querySelector(".popup__fullscreen");
+let namePopup = popupPhotoElement.querySelector(".popup__name");
 let newPlace = {};
 
 const initialCards = [
@@ -79,6 +79,8 @@ function elementListeners(element) {
 
 const likeElement = function (event) {
   event.target.classList.toggle("place__like_active");
+  event.target.classList.toggle("place__like");
+
 };
 
 const deleteElement = function (event) {

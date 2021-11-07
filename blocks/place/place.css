@@ -1,6 +1,7 @@
 .place {
   display: flex;
   flex-direction: column;
+  position: relative;
   width: 282px;
   list-style-type: none;
   margin: 0;

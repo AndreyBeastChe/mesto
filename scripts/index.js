@@ -1,29 +1,31 @@
-let popupElement = document.querySelector(".popup");
 const popupAddElement = document.querySelector(".popup_type_new-card");
 const popupEditElement = document.querySelector(".popup_type_edit");
 const popupPhotoElement = document.querySelector(".popup_type_photo");
+const popupContentEditPopup = popupEditElement.querySelector(".popup__content");
+const popupContentAddPopup = popupAddElement.querySelector(".popup__content");
 const popupOpenButtonEditPopup = document.querySelector(
   ".profile__edit-button"
 );
 const popupOpenButtonAddPopup = document.querySelector(".profile__add-button");
 const placecGrid = document.querySelector(".places__grid");
 const placeTemplate = document.querySelector("#place");
-let profileName = document.querySelector(".profile__name");
-let jobName = document.querySelector(".profile__description");
-let nameInput = popupElement.querySelector(".popup__input_type_name");
-let jobInput = popupElement.querySelector(".popup__input_type_profession");
-const placeInput = document.querySelector("[name=placeInput]");
-const linkInput = document.querySelector("[name=linkInput]");
+const profileName = document.querySelector(".profile__name");
+const jobName = document.querySelector(".profile__description");
+const nameInput = popupEditElement.querySelector(".popup__input_type_name");
+const jobInput = popupEditElement.querySelector(
+  ".popup__input_type_profession"
+);
+const placeInput = popupAddElement.querySelector("[name=placeInput]");
+const linkInput = popupAddElement.querySelector("[name=linkInput]");
 const popupEditCloseButtonElement =
   popupEditElement.querySelector(".popup__close");
 const popupAddCloseButtonElement =
   popupAddElement.querySelector(".popup__close");
 const popupFullscriinCloseButtonElement =
   popupPhotoElement.querySelector(".popup__close");
-let fotoPopup = popupPhotoElement.querySelector(".popup__fullscreen");
-let namePopup = popupPhotoElement.querySelector(".popup__name");
+const fotoPopup = popupPhotoElement.querySelector(".popup__fullscreen");
+const namePopup = popupPhotoElement.querySelector(".popup__name");
 let newPlace = {};
-
 const initialCards = [
   {
     name: "Архыз",
@@ -51,43 +53,41 @@ const initialCards = [
   },
 ];
 
-function main() {
+function renderInitialArray() {
   initialCards.forEach((element) => {
     renderItem(element);
   });
 }
 
 function renderItem(element) {
-  let placeElement = placeTemplate.content
+  const placeElement = placeTemplate.content
     .querySelector(".place")
     .cloneNode(true);
-  (placeElement.querySelector(".place__title").textContent = element.name),
-    (placeElement.querySelector(".place__foto").src = element.link),
-    elementListeners(placeElement);
+  placeElement.querySelector(".place__title").textContent = element.name;
+  placeElement.querySelector(".place__foto").src = element.link;
+  setCardEventListeners(placeElement);
   placecGrid.appendChild(placeElement);
 }
 
-function elementListeners(element) {
+function setCardEventListeners(element) {
   element.querySelector(".place__like").addEventListener("click", likeElement);
   element
     .querySelector(".place__delete")
     .addEventListener("click", deleteElement);
   element.querySelector(".place__foto").addEventListener("click", () => {
-    openFullscriinPlace(element);
+    openFullscreenPlace(element);
   });
 }
 
 const likeElement = function (event) {
   event.target.classList.toggle("place__like_active");
-  event.target.classList.toggle("place__like");
-
 };
 
 const deleteElement = function (event) {
   event.target.closest(".place").remove();
 };
 
-main();
+renderInitialArray();
 const openPopup = function (popupElement) {
   popupElement.classList.add("popup_opened");
 };
@@ -106,7 +106,7 @@ function openAddPopup(popupElement) {
   openPopup(popupElement);
 }
 
-function openFullscriinPlace(el) {
+function openFullscreenPlace(el) {
   fotoPopup.src = el.querySelector(".place__foto").src;
   namePopup.textContent = el.querySelector(".place__title").textContent;
   openPopup(popupPhotoElement);
@@ -124,8 +124,8 @@ function addCard(evt) {
   newPlace.name = placeInput.value;
   newPlace.link = linkInput.value;
   renderItem(newPlace);
-  placeInput.value = null;
-  linkInput.value = null;
+  placeInput.value = "";
+  linkInput.value = "";
   closePopup(popupAddElement);
 }
 
@@ -144,5 +144,5 @@ popupAddCloseButtonElement.addEventListener("click", () => {
 popupFullscriinCloseButtonElement.addEventListener("click", () => {
   closePopup(popupPhotoElement);
 });
-popupEditElement.addEventListener("submit", editProfile);
-popupAddElement.addEventListener("submit", addCard);
+popupContentEditPopup.addEventListener("submit", editProfile);
+popupContentAddPopup.addEventListener("submit", addCard);

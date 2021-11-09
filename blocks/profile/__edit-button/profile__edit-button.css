@@ -9,6 +9,7 @@
   background-repeat: no-repeat;
   background-position: center;
   align-self: center;
+  cursor: pointer;
 }
 
 @media (max-width: 767px) {

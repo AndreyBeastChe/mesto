@@ -10,6 +10,7 @@
   background-position: center;
   top: 0;
   right: 0;
+  cursor: pointer;
 }
 
 @media (max-width: 767px) {

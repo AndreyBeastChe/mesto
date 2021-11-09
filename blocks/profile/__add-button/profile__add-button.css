@@ -10,6 +10,7 @@
   height: 50px;
   margin: 75px 0 85px auto;
   padding: 0;
+  cursor: pointer;
 }
 
 @media (max-width: 767px) {

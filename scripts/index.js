@@ -25,7 +25,7 @@ const popupFullscriinCloseButtonElement =
   popupPhotoElement.querySelector(".popup__close");
 const fotoPopup = popupPhotoElement.querySelector(".popup__fullscreen");
 const namePopup = popupPhotoElement.querySelector(".popup__name");
-let newPlace = {};
+const newPlace = {};
 const initialCards = [
   {
     name: "Архыз",
@@ -54,7 +54,7 @@ const initialCards = [
 ];
 
 function renderInitialArray() {
-  initialCards.forEach((element) => {
+  initialCards.reverse().forEach((element) => {
     renderItem(element);
   });
 }
@@ -66,7 +66,7 @@ function renderItem(element) {
   placeElement.querySelector(".place__title").textContent = element.name;
   placeElement.querySelector(".place__foto").src = element.link;
   setCardEventListeners(placeElement);
-  placecGrid.appendChild(placeElement);
+  placecGrid.prepend(placeElement);
 }
 
 function setCardEventListeners(element) {

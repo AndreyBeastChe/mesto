@@ -96,6 +96,19 @@ const closePopup = function (popupElement) {
   popupElement.classList.remove("popup_opened");
 };
 
+const closePopupClickOverlay = function (popupElement) {
+  if (event.target !== event.currentTarget) {
+    return;
+  }
+  closePopup(popupElement);
+};
+
+const closePopupClickEsc = function (popupElement) {
+  if (event.key === "Escape") {
+    closePopup(popupElement);
+  }
+};
+
 function openEditPopup(popupElement) {
   nameInput.value = profileName.textContent;
   jobInput.value = jobName.textContent;
@@ -146,3 +159,19 @@ popupFullscriinCloseButtonElement.addEventListener("click", () => {
 });
 popupContentEditPopup.addEventListener("submit", editProfile);
 popupContentAddPopup.addEventListener("submit", addCard);
+
+popupEditElement.addEventListener("click", () => {
+  closePopupClickOverlay(popupEditElement);
+});
+popupAddElement.addEventListener("click", () => {
+  closePopupClickOverlay(popupAddElement);
+});
+popupPhotoElement.addEventListener("click", () => {
+  closePopupClickOverlay(popupPhotoElement);
+});
+
+document.addEventListener("keydown", () => {
+  closePopupClickEsc(popupEditElement);
+  closePopupClickEsc(popupAddElement);
+  closePopupClickEsc(popupPhotoElement);
+});

@@ -1,6 +1,12 @@
 .popup__field {
-    display: flex;
-    flex-direction: column;
-    width: 358px;
-    margin-bottom: 13px;
+  display: flex;
+  flex-direction: column;
+  width: 358px;
+  margin-bottom: 13px;
+}
+
+@media (max-width: 767px) {
+  .popup__field {
+    width: 238px;
+  }
 }

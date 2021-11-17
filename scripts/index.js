@@ -66,6 +66,10 @@ function renderItem(element) {
   placeElement.querySelector(".place__title").textContent = element.name;
   placeElement.querySelector(".place__foto").src = element.link;
   setCardEventListeners(placeElement);
+  addItem(placeElement);
+}
+
+function addItem(placeElement) {
   placecGrid.prepend(placeElement);
 }
 
@@ -90,21 +94,25 @@ const deleteElement = function (event) {
 renderInitialArray();
 const openPopup = function (popupElement) {
   popupElement.classList.add("popup_opened");
+  document.addEventListener("keydown", closePopupClickEsc);
 };
 
 const closePopup = function (popupElement) {
   popupElement.classList.remove("popup_opened");
+  document.removeEventListener("keydown", closePopupClickEsc);
 };
 
-const closePopupClickOverlay = function (popupElement) {
+const closePopupClickOverlay = function (event) {
   if (event.target !== event.currentTarget) {
     return;
   }
+  popupElement = document.querySelector(".popup_opened");
   closePopup(popupElement);
 };
 
-const closePopupClickEsc = function (popupElement) {
+const closePopupClickEsc = function (event) {
   if (event.key === "Escape") {
+    popupElement = document.querySelector(".popup_opened");
     closePopup(popupElement);
   }
 };
@@ -112,6 +120,7 @@ const closePopupClickEsc = function (popupElement) {
 function openEditPopup(popupElement) {
   nameInput.value = profileName.textContent;
   jobInput.value = jobName.textContent;
+  checkValidation();
   openPopup(popupElement);
 }
 
@@ -122,6 +131,7 @@ function openAddPopup(popupElement) {
 function openFullscreenPlace(el) {
   fotoPopup.src = el.querySelector(".place__foto").src;
   namePopup.textContent = el.querySelector(".place__title").textContent;
+  fotoPopup.alt = el.querySelector(".place__title").textContent;
   openPopup(popupPhotoElement);
 }
 
@@ -139,6 +149,7 @@ function addCard(evt) {
   renderItem(newPlace);
   placeInput.value = "";
   linkInput.value = "";
+  checkValidation();
   closePopup(popupAddElement);
 }
 
@@ -160,18 +171,6 @@ popupFullscriinCloseButtonElement.addEventListener("click", () => {
 popupContentEditPopup.addEventListener("submit", editProfile);
 popupContentAddPopup.addEventListener("submit", addCard);
 
-popupEditElement.addEventListener("click", () => {
-  closePopupClickOverlay(popupEditElement);
-});
-popupAddElement.addEventListener("click", () => {
-  closePopupClickOverlay(popupAddElement);
-});
-popupPhotoElement.addEventListener("click", () => {
-  closePopupClickOverlay(popupPhotoElement);
-});
-
-document.addEventListener("keydown", () => {
-  closePopupClickEsc(popupEditElement);
-  closePopupClickEsc(popupAddElement);
-  closePopupClickEsc(popupPhotoElement);
-});
+popupEditElement.addEventListener("click", closePopupClickOverlay);
+popupAddElement.addEventListener("click", closePopupClickOverlay);
+popupPhotoElement.addEventListener("click", closePopupClickOverlay);

@@ -65,6 +65,7 @@ function renderItem(element) {
     .cloneNode(true);
   placeElement.querySelector(".place__title").textContent = element.name;
   placeElement.querySelector(".place__foto").src = element.link;
+  placeElement.querySelector(".place__foto").alt = element.name
   setCardEventListeners(placeElement);
   addItem(placeElement);
 }

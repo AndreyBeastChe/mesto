@@ -29,6 +29,7 @@ const popupFullscriinCloseButtonElement =
 export const fotoPopup = popupPhotoElement.querySelector(".popup__fullscreen");
 export const namePopup = popupPhotoElement.querySelector(".popup__name");
 const newPlace = {};
+const formValidators = {};
 const initialCards = [
   {
     name: "Архыз",
@@ -67,17 +68,18 @@ const config = {
 
 function renderInitialArray() {
   initialCards.reverse().forEach((element) => {
-    addItem(element);
+    insertCard(element);
   });
 }
 renderInitialArray();
 
-function addItem(element) {
-  const HTMLElement = placeTemplate.content
-    .querySelector(".place")
-    .cloneNode(true);
-  const placeElement = new Card(element.name, element.link, HTMLElement);
-  placecGrid.prepend(placeElement.createCard());
+function createCard(element) {
+  const placeElement = new Card(element.name, element.link, "#place");
+  return placeElement;
+}
+
+function insertCard(element) {
+  placecGrid.prepend(createCard(element).createElement());
 }
 
 export const openPopup = function (popupElement) {
@@ -108,14 +110,12 @@ const closePopupClickEsc = function (event) {
 function openEditPopup(popupElement) {
   nameInput.value = profileName.textContent;
   jobInput.value = jobName.textContent;
-  const validation = new FormValidation(config, popupContentEditPopup);
-  validation.enableValidation();
+  formValidators[profileForm.name].enableValidation();
   openPopup(popupElement);
 }
 
 function openAddPopup(popupElement) {
-  const validation = new FormValidation(config, popupContentAddPopup);
-  validation.enableValidation();
+  formValidators[addCardForm.name].enableValidation();
   openPopup(popupElement);
 }
 
@@ -130,11 +130,24 @@ function addCard(evt) {
   evt.preventDefault();
   newPlace.name = placeInput.value;
   newPlace.link = linkInput.value;
-  addItem(newPlace);
+  insertCard(newPlace);
   placeInput.value = "";
   linkInput.value = "";
   closePopup(popupAddElement);
 }
+
+// Включение валидации
+const enableValidation = (config) => {
+  const formList = Array.from(document.querySelectorAll(config.formSelector));
+  formList.forEach((formElement) => {
+    const validator = new FormValidation(config, formElement);
+    // вот тут в объект записываем под именем формы
+    formValidators[formElement.name] = validator;
+    validator.enableValidation();
+  });
+};
+
+enableValidation(config);
 
 popupOpenButtonEditPopup.addEventListener("click", () => {
   openEditPopup(popupEditElement);

@@ -90,8 +90,10 @@ export class FormValidation {
       });
     });
   }
-
   enableValidation() {
     this._setEventListeners();
+  }
+  resetValidation() {
+    this.enableValidation();
   }
 }

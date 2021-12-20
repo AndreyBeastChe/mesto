@@ -7,8 +7,8 @@ export class Card {
     this._selector = selector;
   }
 
-   _getTemplate(){
-    this.placeTemplate = document.querySelector(this._selector).content
+  _getTemplate() {
+    this.placeTemplate = document.querySelector(this._selector).content;
     this._view = this.placeTemplate.cloneNode(true);
   }
 
@@ -30,9 +30,9 @@ export class Card {
   }
 
   _openFullscreenPlace() {
-    fotoPopup.src = this._link 
-    namePopup.textContent = this._title
-    fotoPopup.alt = this._title
+    fotoPopup.src = this._link;
+    namePopup.textContent = this._title;
+    fotoPopup.alt = this._title;
     openPopup(popupPhotoElement);
   }
 
@@ -40,13 +40,11 @@ export class Card {
     this._view
       .querySelector(".place__like")
       .addEventListener("click", this._likeElement);
-      this._view
+    this._view
       .querySelector(".place__delete")
       .addEventListener("click", this._deleteElement);
-      this._view
-      .querySelector(".place__foto")
-      .addEventListener("click", () => {
-        this._openFullscreenPlace();
-      });
+    this._view.querySelector(".place__foto").addEventListener("click", () => {
+      this._openFullscreenPlace();
+    });
   }
 }

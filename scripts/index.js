@@ -110,12 +110,12 @@ const closePopupClickEsc = function (event) {
 function openEditPopup(popupElement) {
   nameInput.value = profileName.textContent;
   jobInput.value = jobName.textContent;
-  formValidators[profileForm.name].resetValidation();
+  formValidators[profileForm.name].disableButton();
   openPopup(popupElement);
 }
 
 function openAddPopup(popupElement) {
-  formValidators[addCardForm.name].resetValidation();
+  formValidators[addCardForm.name].disableButton();
   openPopup(popupElement);
 }
 

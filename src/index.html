@@ -4,17 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mesto</title>
-    <link rel="stylesheet" href="./pages/index.css" />
   </head>
 
   <body class="page">
     <header class="header">
-      <img src="./images/Vector.svg" alt="Лого" class="header__logo" />
+      <img src="<%=require('./images/Vector.svg')%>" alt="Лого" class="header__logo" />
     </header>
     <main class="content">
       <section class="profile">
         <img
-          src="./images/Cousteau-foto.png"
+        src="<%=require('./images/Cousteau-foto.png')%>"
           alt="Фото Кусто"
           class="profile__avatar"
         />
@@ -117,7 +116,7 @@
 
     <template id="place">
       <li class="place">
-        <img src="./images/error.jpg" alt="Фото места" class="place__foto" />
+        <img src="<%=require('./images/error.jpg')%>" alt="Фото места" class="place__foto" />
         <button type="button" class="place__delete"></button>
         <div class="place__rectangle">
           <h2 class="place__title"></h2>

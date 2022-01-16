@@ -1,0 +1,37 @@
+{
+  "name": "yandex_praktikum",
+  "version": "0.0.1",
+  "description": "### Описание проекта",
+  "main": "index.js",
+  "scripts": {
+    "build": "rm -rf dist && webpack",
+    "dev": "webpack serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://AndreyBeastChe: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@github.com/AndreyBeastChe/mesto.git"
+  },
+  "author": "Andrey Chechetkin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AndreyBeastChe/mesto/issues"
+  },
+  "homepage": "https://github.com/AndreyBeastChe/mesto#readme",
+  "devDependencies": {
+    "@babel/core": "^7.16.7",
+    "@babel/preset-env": "^7.16.8",
+    "autoprefixer": "^10.4.2",
+    "babel-loader": "^8.2.3",
+    "clean-webpack-plugin": "^4.0.0",
+    "css-loader": "^6.5.1",
+    "cssnano": "^5.0.15",
+    "html-webpack-plugin": "^5.5.0",
+    "mini-css-extract-plugin": "^2.5.0",
+    "postcss-loader": "^6.2.1",
+    "webpack": "^5.66.0",
+    "webpack-cli": "^4.9.1"
+  },
+  "dependencies": {
+    "webpack-dev-server": "^4.7.3"
+  }
+}

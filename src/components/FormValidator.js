@@ -23,14 +23,14 @@ export class FormValidation {
     errorElement.classList.add(errorClass);
   }
 
-  _hasInvalidInput(inputList) {
-    return inputList.some((inputElement) => {
+  _hasInvalidInput() {
+    return this._inputList.some((inputElement) => {
       return !inputElement.validity.valid;
     });
   }
 
-  _toggleButtonState(inputList) {
-    if (this._hasInvalidInput(inputList)) {
+  _toggleButtonState() {
+    if (this._hasInvalidInput(this._inputList)) {
       this.disableButton()
     } else {
       this._buttonElement.classList.remove(this._inactiveButtonClass);
@@ -66,22 +66,22 @@ export class FormValidation {
   }
 
   _setEventListeners() {
-    const inputList = Array.from(
+    this._inputList = Array.from(
       this._formElement.querySelectorAll(this._inputSelector)
     );
     this._buttonElement = this._formElement.querySelector(
       this._submitButtonSelector
     );
     this._toggleButtonState(
-      inputList,
+      this._inputList,
       this._buttonElement,
       this._inactiveButtonClass
     );
-    inputList.forEach((inputElement) => {
+    this._inputList.forEach((inputElement) => {
       inputElement.addEventListener("input", () => {
         this._checkInputValidity(inputElement);
         this._toggleButtonState(
-          inputList,
+          this._inputList,
           this._buttonElement,
           this._inactiveButtonClass
         );

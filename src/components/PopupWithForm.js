@@ -21,10 +21,17 @@ export class PopupWithForm extends Popup {
     this._submit(this._getInputValues());
   }
 
+  updateSubmit(func) {
+    this._submit = func;
+  }
+
+  setLoadingText(text) {
+    this._submitButton.textContent = text;
+  }
+
   setEventListeners() {
     super.setEventListeners();
     this._form.addEventListener("submit", (evt) => {
-      debugger;
       this._handleSubmitPopup(evt);
     });
   }

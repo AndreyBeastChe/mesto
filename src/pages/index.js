@@ -4,57 +4,38 @@ import { Section } from "../components/Section.js";
 import { FormValidation } from "../components/FormValidator.js";
 import { PopupWithImage } from "../components/PopupWithImage.js";
 import { PopupWithForm } from "../components/PopupWithForm.js";
+import { PopupSubmit } from "../components/PopupSubmit.js";
 import { UserInfo } from "../components/UserInfo.js";
 import { api } from "../components/Api.js";
+import {
+  popupOpenButtonEditPopup,
+  popupOpenButtonAddPopup,
+  popupOpenButtonEditUserPopup,
+  placecGrid,
+  nameInput,
+  jobInput,
+  formValidators,
+  load,
+  config,
+} from "../utils/constants.js";
 
-const popupAddElement = document.querySelector(".popup_type_new-card");
-const popupEditElement = document.querySelector(".popup_type_edit");
-const popupEditUserElement = document.querySelector(".popup_type_user");
-const popupOpenButtonEditPopup = document.querySelector(
-  ".profile__edit-button"
-);
-const popupOpenButtonAddPopup = document.querySelector(".profile__add-button");
-const popupOpenButtonEditUserPopup = document.querySelector(".profile__avatar");
-const placecGrid = document.querySelector(".places__grid");
-const nameInput = popupEditElement.querySelector(".popup__input_type_name");
-const jobInput = popupEditElement.querySelector(
-  ".popup__input_type_profession"
-);
-const placeInput = popupAddElement.querySelector("[name=placeInput]");
-const linkInput = popupAddElement.querySelector("[name=linkInput]");
-const avatarInput = popupEditUserElement.querySelector("[name=avatarInput]");
-const formValidators = {};
-const load = "Сохранение...";
-
-const config = {
-  formSelector: ".popup__content",
-  inputSelector: ".popup__input",
-  submitButtonSelector: ".popup__save",
-  inactiveButtonClass: "popup__save_disabled",
-  inputErrorClass: "popup__input_type_error",
-  errorClass: "popup__error_visible",
-};
-
-function createItems(items, userId) {
-  const section = new Section(
-    {
-      items: items,
-      renderer: (element) => {
-        const card = new Card(
-          element,
-          "#place",
-          userId,
-          handleCardClick,
-          handleLikeClick,
-          handleDelClick
-        );
-        section.addItem(card.createElement());
-      },
+const section = new Section(
+  {
+    renderer: (element) => {
+      const userId = element.owner._id;
+      const card = new Card(
+        element,
+        "#place",
+        userId,
+        handleCardClick,
+        handleLikeClick,
+        handleDelClick
+      );
+      section.addItem(card.createElement());
     },
-    placecGrid
-  );
-  section.renderItems();
-}
+  },
+  placecGrid
+);
 
 const popupAddPopup = new PopupWithForm(".popup_type_new-card", (data) =>
   handleSubmitAddCard(data)
@@ -91,7 +72,7 @@ popupOpenButtonAddPopup.addEventListener("click", () => {
 });
 
 popupOpenButtonEditUserPopup.addEventListener("click", () => {
-  formValidators[addCardForm.name].disableButton();
+  formValidators[avatarForm.name].disableButton();
   popupEditUser.openPopup();
 });
 
@@ -101,11 +82,11 @@ function handleSubmitEditPopup(data) {
     .setUser({ name: data.nameInput, about: data.jobInput })
     .then(() => {
       userInfo.setUserInfo(data.nameInput, data.jobInput);
+      popupEditPopup.closePopup();
+      formValidators[profileForm.name].disableButton();
     })
     .catch((err) => console.log("Ошибка изменения имени и профессии " + err))
-    .finally(() => popupEditPopup.closePopup());
-  formValidators[profileForm.name].disableButton();
-  popupEditPopup.setLoadingText("Сохранить");
+    .finally(() => popupEditPopup.setLoadingText("Сохранить"));
 }
 
 function handleSubmitAddCard(data) {
@@ -115,11 +96,11 @@ function handleSubmitAddCard(data) {
     .then((res) => {
       const infoCards = [];
       infoCards.push(res);
-      createItems(infoCards, res.owner._id);
+      section.renderItems(infoCards);
+      popupAddPopup.closePopup();
     })
     .catch((err) => console.log("Ошибка добавления новой карточки " + err))
-    .finally(() => popupAddPopup.closePopup());
-  popupAddPopup.setLoadingText("Создать");
+    .finally(() => popupAddPopup.setLoadingText("Создать"));
 }
 
 function handleSubmitUserPopup(data) {
@@ -128,11 +109,11 @@ function handleSubmitUserPopup(data) {
     .changeAvatar(data.avatarInput)
     .then(() => {
       userInfo.setUserAvatar(data.avatarInput);
+      popupEditUser.closePopup();
+      formValidators[avatarForm.name].disableButton();
     })
     .catch((err) => console.log("Ошибка изменения аватара" + err))
-    .finally(() => popupEditUser.closePopup());
-  popupEditUser.setLoadingText(load);
-  formValidators[avatarForm.name].disableButton();
+    .finally(() => popupEditUser.setLoadingText("Сохранить"));
 }
 
 const popupWithImage = new PopupWithImage(".popup_type_photo");
@@ -142,7 +123,7 @@ function handleCardClick(name, link) {
   popupWithImage.openPopup(name, link);
 }
 
-const popupDelSubmit = new PopupWithForm(".popup_type_submit", (data) =>
+const popupDelSubmit = new PopupSubmit(".popup_type_submit", (data) =>
   handleDelClick(data)
 );
 popupDelSubmit.setEventListeners();
@@ -155,11 +136,11 @@ function handleDelClick(card) {
       .deleteCard(card._id)
       .then(() => {
         card.delete(card._id);
+        popupDelSubmit.closePopup();
       })
       .catch((err) => console.log("Ошибка удаления элемента" + err))
-      .finally(() => popupDelSubmit.closePopup());
+      .finally(() => popupDelSubmit.setLoadingText("Да"));
   });
-  popupDelSubmit.setLoadingText("Да");
 }
 
 function handleLikeClick(card) {
@@ -180,12 +161,13 @@ function handleLikeClick(card) {
   }
 }
 
-Promise.all([api.getUser(), api.gerCards()]).then(([user, card]) => {
-  const userId = user._id;
-  userInfo.setUserInfo(user.name, user.about);
-  userInfo.setUserAvatar(user.avatar);
-  createItems(card, userId);
-});
+Promise.all([api.getUser(), api.gerCards()])
+  .then(([user, cards]) => {
+    userInfo.setUserInfo(user.name, user.about);
+    userInfo.setUserAvatar(user.avatar);
+    section.renderItems(cards);
+  })
+  .catch((err) => console.log("Ошибка инициализации" + err));
 
 const enableValidation = (config) => {
   const formList = Array.from(document.querySelectorAll(config.formSelector));

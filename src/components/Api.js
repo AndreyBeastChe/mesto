@@ -5,14 +5,14 @@ class Api {
     this._groupId = "cohort-33";
   }
 
-  response(res) {
+  _checkResponse(res) {
     return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
   }
 
   getUser() {
     return fetch(`${this._url}/${this._groupId}/users/me`, {
       headers: this._headers,
-    }).then(this.response);
+    }).then(this._checkResponse);
   }
 
   setUser({ name, about }) {
@@ -20,13 +20,13 @@ class Api {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({ name, about }),
-    }).then(this.response);
+    }).then(this._checkResponse);
   }
 
   gerCards() {
     return fetch(`${this._url}/${this._groupId}/cards`, {
       headers: this._headers,
-    }).then(this.response);
+    }).then(this._checkResponse);
   }
 
   addCard({ name, link }) {
@@ -34,7 +34,7 @@ class Api {
       method: "POST",
       headers: this._headers,
       body: JSON.stringify({ name, link }),
-    }).then(this.response);
+    }).then(this._checkResponse);
   }
 
   changeAvatar(avatar) {
@@ -42,27 +42,27 @@ class Api {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({ avatar }),
-    }).then(this.response);
+    }).then(this._checkResponse);
   }
 
   likeCard(cardId) {
     return fetch(`${this._url}/v1/${this._groupId}/cards/${cardId}/likes`, {
       method: "PUT",
       headers: this._headers,
-    }).then(this.response);
+    }).then(this._checkResponse);
   }
   dislikeCard(cardId) {
     return fetch(`${this._url}/v1/${this._groupId}/cards/${cardId}/likes`, {
       method: "DELETE",
       headers: this._headers,
-    }).then(this.response);
+    }).then(this._checkResponse);
   }
 
   deleteCard(cardId) {
     return fetch(`${this._url}/v1/${this._groupId}/cards/${cardId}`, {
       method: "DELETE",
       headers: this._headers,
-    }).then(this.response);
+    }).then(this._checkResponse);
   }
 }
 
